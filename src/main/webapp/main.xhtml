@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jl="http://xmlns.jcp.org/jsf/composite/jsflive"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head>
+	<title>Teste</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head> 
+<body> 
+	
+	<form jsf:id="formid">
+		
+		<span>#{request.requestURI}</span>
+					
+		<br />
+		<hr />
+		<br />
+		
+		<h:dataTable id="tabelaUsuarios" value="#{repositorioUsuarios.usuarios}" var="usuario">
+			<h:column>
+				<facet name="header">ID</facet>
+				#{usuario.id}
+			</h:column>
+			<h:column>
+				<facet name="header"></facet>
+				#{usuario.nome}
+			</h:column>
+			<h:column>
+				<facet name="header"></facet>
+				#{usuario.email}
+			</h:column>
+		</h:dataTable>
+		<br />
+		<hr />
+		<br />
+		<input type="hidden" jsf:id="usuarioId" jsf:value="#{formularioUsuario.id}" />
+		<input type="text" jsf:id="usuarioNome" jsf:value="#{formularioUsuario.nome}" placeholder="Nome" />
+		<br />
+		<input type="text" jsf:id="usuarioEmail" jsf:value="#{formularioUsuario.email}" placeholder="E-mail" />
+		<br />
+		<input type="submit" jsf:id="botaoSalvarUsuario" value="Salvar">
+			<f:ajax execute="@form" listener="#{formularioUsuario.salvar()}" render="formid" />
+		</input>
+	</form>
+	
+		
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="js" name="underscore-min.js" />
+	<h:outputScript library="js" name="backbone-min.js" />
+</body> 
+</html>

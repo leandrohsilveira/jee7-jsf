@@ -15,35 +15,33 @@
 	
 	<form jsf:id="formid">
 		
-		<span>#{request.requestURI}</span>
-					
+		
+		#{strings.locale} - #{strings.olaMundo()}
+							
 		<br />
 		<hr />
 		<br />
 		
 		<h:dataTable id="tabelaUsuarios" value="#{repositorioUsuarios.usuarios}" var="usuario">
-			<h:column>
-				<facet name="header">ID</facet>
-				#{usuario.id}
-			</h:column>
-			<h:column>
-				<facet name="header"></facet>
-				#{usuario.nome}
-			</h:column>
-			<h:column>
-				<facet name="header"></facet>
-				#{usuario.email}
-			</h:column>
+			<f:facet name="heading">
+				<h:column rowHeader="true">#{strings.id()}</h:column>
+				<h:column rowHeader="true">#{strings.nome()}</h:column>
+				<h:column rowHeader="true">#{strings.email()}</h:column>
+			</f:facet>
+			
+			<h:column>#{usuario.id}</h:column>
+			<h:column>#{usuario.nome}</h:column>
+			<h:column>#{usuario.email}</h:column>
 		</h:dataTable>
 		<br />
 		<hr />
 		<br />
 		<input type="hidden" jsf:id="usuarioId" jsf:value="#{formularioUsuario.id}" />
-		<input type="text" jsf:id="usuarioNome" jsf:value="#{formularioUsuario.nome}" placeholder="Nome" />
+		<input type="text" jsf:id="usuarioNome" jsf:value="#{formularioUsuario.nome}" placeholder="#{strings.nome()}" />
 		<br />
-		<input type="text" jsf:id="usuarioEmail" jsf:value="#{formularioUsuario.email}" placeholder="E-mail" />
+		<input type="text" jsf:id="usuarioEmail" jsf:value="#{formularioUsuario.email}" placeholder="#{strings.email()}" />
 		<br />
-		<input type="submit" jsf:id="botaoSalvarUsuario" value="Salvar">
+		<input type="submit" jsf:id="botaoSalvarUsuario" value="#{strings.salvar()}">
 			<f:ajax execute="@form" listener="#{formularioUsuario.salvar()}" render="formid" />
 		</input>
 	</form>

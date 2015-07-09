@@ -1,8 +1,10 @@
-package br.com.lhs.jee7.jsf.bundles;
+package br.com.lhs.jee7.jsf.bundles.impl;
 
 import java.util.Locale;
 
-public class StringsDefault implements Bundle {
+import br.com.lhs.jee7.jsf.bundles.Rotulos;
+
+public class RotulosPtBr implements Rotulos {
 
 	/**
 	 *
@@ -28,6 +30,11 @@ public class StringsDefault implements Bundle {
 	@Override
 	public String nome() {
 		return "Nome";
+	}
+
+	@Override
+	public String pesquisarUsuariosPorId() {
+		return "Filtrar usuário por ID";
 	}
 
 }

@@ -14,38 +14,31 @@
 <body> 
 	
 	<form jsf:id="formid">
-		
-		
-		#{strings.locale} - #{strings.olaMundo()}
-							
+		<input type="hidden" jsf:id="usuarioId" jsf:value="#{usuario.id}" />
+		<input type="text" jsf:id="usuarioNome" jsf:value="#{usuario.nome}" placeholder="#{rotulos.nome()}" />
 		<br />
-		<hr />
+		<input type="text" jsf:id="usuarioEmail" jsf:value="#{usuario.email}" placeholder="#{rotulos.email()}" />
 		<br />
-		
-		<h:dataTable id="tabelaUsuarios" value="#{repositorioUsuarios.usuarios}" var="usuario">
-			<f:facet name="heading">
-				<h:column rowHeader="true">#{strings.id()}</h:column>
-				<h:column rowHeader="true">#{strings.nome()}</h:column>
-				<h:column rowHeader="true">#{strings.email()}</h:column>
-			</f:facet>
-			
-			<h:column>#{usuario.id}</h:column>
-			<h:column>#{usuario.nome}</h:column>
-			<h:column>#{usuario.email}</h:column>
-		</h:dataTable>
-		<br />
-		<hr />
-		<br />
-		<input type="hidden" jsf:id="usuarioId" jsf:value="#{formularioUsuario.id}" />
-		<input type="text" jsf:id="usuarioNome" jsf:value="#{formularioUsuario.nome}" placeholder="#{strings.nome()}" />
-		<br />
-		<input type="text" jsf:id="usuarioEmail" jsf:value="#{formularioUsuario.email}" placeholder="#{strings.email()}" />
-		<br />
-		<input type="submit" jsf:id="botaoSalvarUsuario" value="#{strings.salvar()}">
-			<f:ajax execute="@form" listener="#{formularioUsuario.salvar()}" render="formid" />
+		<input type="submit" jsf:id="botaoSalvarUsuario" value="#{rotulos.salvar()}">
+			<f:ajax execute="formid" listener="#{usuarioController.salvar()}" render="@form tabelaUsuarios" />
 		</input>
+		
 	</form>
+	<br />
+	<hr />
+	<br />
 	
+	<h:dataTable id="tabelaUsuarios" value="#{usuarios}" var="_u">
+		<f:facet name="header">
+			<h:column rowHeader="true">#{rotulos.id()}</h:column>
+			<h:column rowHeader="true">#{rotulos.nome()}</h:column>
+			<h:column rowHeader="true">#{rotulos.email()}</h:column>
+		</f:facet>
+		
+		<h:column>#{_u.id}</h:column>
+		<h:column>#{_u.nome}</h:column>
+		<h:column>#{_u.email}</h:column>
+	</h:dataTable>
 		
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<h:outputScript library="js" name="underscore-min.js" />

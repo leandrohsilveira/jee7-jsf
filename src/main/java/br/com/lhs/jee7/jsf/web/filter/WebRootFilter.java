@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class WebRootFilter
  */
-@WebFilter("/*")
+@WebFilter("/view")
 public class WebRootFilter implements Filter {
 
 	@Override
@@ -23,14 +23,7 @@ public class WebRootFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// HttpServletRequest req = (HttpServletRequest) request;
-		// if (StringUtils.isNotBlank(req.getRequestURI()) &&
-		// !req.getRequestURI().startsWith("/jee7-jsf/javax.faces.resource") &&
-		// !req.getRequestURI().startsWith("/jee7-jsf/resources")) {
-		// req.getRequestDispatcher("/").forward(request, response);
-		// return;
-		// }
-		chain.doFilter(request, response);
+		request.getRequestDispatcher("/view.jsf").forward(request, response);
 	}
 
 	@Override

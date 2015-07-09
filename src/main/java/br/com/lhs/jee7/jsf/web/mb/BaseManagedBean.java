@@ -15,16 +15,14 @@ public abstract class BaseManagedBean implements Serializable {
 
 	protected abstract Logger getLogger();
 
-	protected abstract String getNomeClasse();
-
 	@PostConstruct
 	protected void postConstruct() {
-		getLogger().info(getNomeClasse().concat(".postConstruct()"));
+		getLogger().info(getLogger().getName() + ".postConstruct()\n");
 	}
 
 	@PreDestroy
 	protected void preDestroy() {
-		getLogger().info(getNomeClasse().concat(".preDestroy()"));
+		getLogger().info(getLogger().getName() + ".preDestroy()\n");
 	}
 
 }

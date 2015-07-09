@@ -11,8 +11,6 @@ import javax.inject.Inject;
 
 import br.com.lhs.jee7.jsf.model.Usuario;
 import br.com.lhs.jee7.jsf.qualifiers.MemoriaImpl;
-import br.com.lhs.jee7.jsf.web.events.EventoSalvarUsuario;
-import br.com.lhs.jee7.jsf.web.events.EventoUsuario;
 
 @MemoriaImpl
 @Singleton
@@ -26,7 +24,7 @@ public class UsuarioImplMemDAO implements UsuarioDAO {
 	private Long cont = 1l;
 
 	@Inject
-	Event<EventoUsuario> eventoAtualizarRepositorioUsuarios;
+	Event<Usuario> eventoAtualizarRepositorioUsuarios;
 
 	@Override
 	public synchronized void salvar(Usuario u) {
@@ -35,7 +33,7 @@ public class UsuarioImplMemDAO implements UsuarioDAO {
 				u.setId(cont++);
 			}
 			usuarios.put(u.getId(), u);
-			eventoAtualizarRepositorioUsuarios.fire(new EventoSalvarUsuario(u));
+			eventoAtualizarRepositorioUsuarios.fire(u);
 		}
 	}
 

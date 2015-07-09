@@ -3,7 +3,7 @@ package br.com.lhs.jee7.jsf.bundles;
 import java.io.Serializable;
 import java.util.Locale;
 
-public interface Bundle extends Serializable {
+public interface Rotulos extends Serializable {
 
 	Locale getLocale();
 
@@ -12,6 +12,8 @@ public interface Bundle extends Serializable {
 	String salvar();
 
 	String nome();
+
+	String pesquisarUsuariosPorId();
 
 	default String email() {
 		return "E-mail";

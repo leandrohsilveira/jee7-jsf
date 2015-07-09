@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:jl="http://xmlns.jcp.org/jsf/composite/jsflive"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head>
+	<title>Teste</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head> 
+<body> 
+	
+	App Teste
+	<br />
+	<hr />
+	<form jsf:id="mainForm" prependId="false">
+		<input jsf:id="viewController" type="text" style="display: none;" current-view="#home" jsf:value="#{viewController.diretorioView}">
+			<f:ajax event="valueChange" execute="mainForm" render="container" />
+		</input>
+		<input type="button" class="btn" jsf-nav="#home" value="Home" />
+		<input type="button" class="btn" jsf-nav="#contato" value="Contato" />
+	</form>
+	<br />
+	<hr />
+	<br />
+	<div class="container" jsf:id="container">
+		<ui:include src="#{viewController.diretorioView}.xhtml" />
+	</div>	
+	<br />
+	<hr />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="js" name="underscore-min.js" />
+	<h:outputScript library="js" name="backbone-min.js" />
+	<script type="text/javascript">
+		$(function(){
+			new JSFClientApi().init();
+		});
+
+		var JSFClientApi = function() {
+
+			var o = {
+				masterSelector: document,
+				viewControllerSelector:'[current-view]',
+				navAttributeName:'jsf-nav'
+			};
+
+			var i = function(opt) {
+				if(opt) {
+					o = $.extend(o, opt);
+				}
+				var navSelector = '['+o.navAttributeName+']';
+				$(o.masterSelector).on('click', navSelector, function(e) {
+					var $viewController=$(o.viewControllerSelector),
+						navTarget=$(e.currentTarget).attr(o.navAttributeName);
+					window.location=navTarget;
+					$viewController.attr('value', navTarget.replace('#', ''));
+					$viewController.trigger('change');
+				});
+			};
+			
+
+			return {
+				init: function(options) {
+					i(options);
+				}
+			};		
+		};
+	</script>
+	
+</body> 
+</html>

@@ -20,9 +20,10 @@
 		<input jsf:id="viewController" type="text" style="display: none;" current-view="#home" jsf:value="#{viewController.diretorioView}">
 			<f:ajax event="valueChange" execute="mainForm" render="container" />
 		</input>
-		<input type="button" class="btn" jsf-nav="#home" value="Home" />
-		<input type="button" class="btn" jsf-nav="#contato" value="Contato" />
 	</form>
+	
+	<button type="button" class="btn" jsf-nav="#home">Home</button>
+	<button type="button" class="btn" jsf-nav="#contato">Contato</button>
 	<br />
 	<hr />
 	<br />
@@ -36,7 +37,7 @@
 	<h:outputScript library="js" name="backbone-min.js" />
 	<script type="text/javascript">
 		$(function(){
-			new JSFClientApi().init();
+			var jsfApi = new JSFClientApi().init();
 		});
 
 		var JSFClientApi = function() {
@@ -44,27 +45,61 @@
 			var o = {
 				masterSelector: document,
 				viewControllerSelector:'[current-view]',
-				navAttributeName:'jsf-nav'
+				navAttributeName:'jsf-nav',
+				pathListenerAttrName: 'jsf-listener',
+				listenerEventAttrName: 'jsf-listener-event'
 			};
 
 			var i = function(opt) {
 				if(opt) {
 					o = $.extend(o, opt);
 				}
+				hnh();
 				var navSelector = '['+o.navAttributeName+']';
 				$(o.masterSelector).on('click', navSelector, function(e) {
-					var $viewController=$(o.viewControllerSelector),
-						navTarget=$(e.currentTarget).attr(o.navAttributeName);
-					window.location=navTarget;
-					$viewController.attr('value', navTarget.replace('#', ''));
-					$viewController.trigger('change');
+					var path=$(e.currentTarget).attr(o.navAttributeName);
+					hn(path);
 				});
 			};
-			
+
+			var hnh = function() {
+				var path = window.location.hash;
+				if(path) {
+					hn(path);
+				}
+			};
+
+			var hn = function(path) {
+				var $viewController=$(o.viewControllerSelector);
+				window.location=path;
+				$viewController.attr('value', path.replace('#', ''));
+				$viewController.trigger('change');
+				tl(path);
+			}
+
+			var tl = function(path) {
+				var $triggers = $('['+o.pathListenerAttrName+'$='+path+']');
+				Array.prototype.forEach.call($triggers, function(item, index){
+					var $i = $(item),
+						e = $i.attr(o.listenerEventAttrName);
+					if(!e) {
+						e = 'click';
+					}
+					$i.trigger(e);
+				});
+			}
+
+			$(window).on('hashchange', function(event) {
+				event.preventDefault();
+				hnh();
+			});
 
 			return {
 				init: function(options) {
 					i(options);
+				},
+				handleNav: function(path) {
+					hn(path);
 				}
 			};		
 		};

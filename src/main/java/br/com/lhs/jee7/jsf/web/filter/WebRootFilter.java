@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class WebRootFilter
  */
-@WebFilter("/view")
+@WebFilter({"/view", "/"})
 public class WebRootFilter implements Filter {
 
 	@Override
@@ -22,7 +22,8 @@ public class WebRootFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
 		request.getRequestDispatcher("/view.jsf").forward(request, response);
 	}
 
